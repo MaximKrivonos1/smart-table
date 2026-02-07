@@ -12,6 +12,29 @@ export function initFiltering(elements) {
     }
 
     const applyFiltering = (query, state, action) => {
+        //код обработки очистки поля
+         if (action?.name === 'clear') {
+            // Получаем поле из data-field атрибута кнопки
+            const field = action.dataset.field;
+
+            if (field) {
+                // Находим родительский элемент кнопки
+                const parent = action.closest('.filter-item') || action.parentElement;
+
+                if (parent) {
+                    // Ищем input внутри родительского элемента
+                    const input = parent.querySelector('input');
+
+                    if (input) {
+                        // Сбрасываем значение в DOM
+                        input.value = '';
+
+                        // Сбрасываем значение в state
+                        state[field] = '';
+                    }
+                }
+            }
+         }
 
         const filter = {};
         Object.keys(elements).forEach(key => {
